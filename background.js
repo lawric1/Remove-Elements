@@ -1,6 +1,4 @@
-var enable = false;
 var injected = false;
-
 
 chrome.browserAction.setIcon({ path: 'disable.png'});
 
@@ -22,5 +20,3 @@ chrome.runtime.onMessage.addListener(
         };
     }
 );
-
-// EXECUTE SCRIPT ONLY ONCE TO FIX EVERYTHING
