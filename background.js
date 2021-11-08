@@ -1,10 +1,9 @@
-var injected = false;
+var injected = false; // Boolean used to prevent script from being injected with every click.
 
-chrome.browserAction.setIcon({ path: 'disable.png'});
+chrome.browserAction.setIcon({ path: 'icon-disable.png'}); // Extension will start disabled.
 
 chrome.browserAction.onClicked.addListener(function (tab) {
     if(!injected){
-        //turn on...
         chrome.browserAction.setIcon({ path: 'icon.png' });
 
         chrome.tabs.executeScript(null, { file: 'core.js' });
@@ -12,11 +11,33 @@ chrome.browserAction.onClicked.addListener(function (tab) {
     }
 });
 
+// Waits until element is deleted to reset.
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.state === false) {
-            chrome.browserAction.setIcon({ path: 'disable.png'});
+        if (request.state === 'Finished') {
+            chrome.browserAction.setIcon({ path: 'icon-disable.png'});
             injected = false;
         };
     }
 );
+
+// Add extension to right click menu.
+chrome.contextMenus.create({
+    title: 'Remove Element',
+    onclick: function(e){
+        if(!injected){
+            chrome.browserAction.setIcon({ path: 'icon.png' });
+    
+            chrome.tabs.executeScript(null, { file: 'core.js' });
+            injected = true;
+        }
+    }
+
+}, function(){})
+
+
+// Helper script for debugging.
+
+// chrome.tabs.onActivated.addListener(function(activeInfo) {
+//     chrome.runtime.reload()
+// });

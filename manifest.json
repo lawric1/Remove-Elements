@@ -1,15 +1,20 @@
 {
     "manifest_version": 2,
 
-    "name": "Element Remover",
+    "name": "Remove Elements",
     "description": "This extension will remove clicked element from the page",
     "version": "1.0",
 
+    "icons": {
+        "16": "icon.png"
+    },
     "browser_action": {
         "default_icon": "icon.png"
     },
     "permissions": [
-        "activeTab"
+        "contextMenus",
+        "activeTab",
+        "tabs"
     ],
     "background": {
         "scripts": ["background.js"]
