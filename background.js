@@ -35,9 +35,14 @@ chrome.contextMenus.create({
 
 }, function(){})
 
+// Reloads extension when tab is loaded.
+chrome.tabs.onUpdated.addListener(function(activeInfo) {
+    chrome.runtime.reload()
+})
 
 // Helper script for debugging.
 
 // chrome.tabs.onActivated.addListener(function(activeInfo) {
 //     chrome.runtime.reload()
 // });
+
